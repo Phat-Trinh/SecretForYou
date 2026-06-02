@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birthday Surprise</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    radial-gradient(circle,#1e3a8a 0%,#0f172a 50%,#020617 100%);
+
+    font-family:Arial,sans-serif;
+}
+
+#container{
+    text-align:center;
+}
+
+.gift{
+    width:180px;
+    height:180px;
+    position:relative;
+    margin:auto;
+    cursor:pointer;
+
+    animation:
+        floating 3s ease-in-out infinite,
+        glowing 1.5s ease-in-out infinite alternate;
+}
+
+.box{
+    position:absolute;
+    bottom:0;
+
+    width:180px;
+    height:120px;
+
+    background:#dc2626;
+    border-radius:10px;
+}
+
+.box::before{
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    transform:translateX(-50%);
+
+    width:20px;
+    height:100%;
+
+    background:gold;
+}
+
+.lid{
+    position:absolute;
+
+    width:190px;
+    height:45px;
+
+    top:40px;
+    left:-5px;
+
+    background:#ef4444;
+
+    border-radius:10px;
+
+    transform-origin:left center;
+
+    transition:1s ease;
+}
+
+.lid::before{
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+    transform:translateX(-50%);
+
+    width:20px;
+    height:100%;
+
+    background:gold;
+}
+
+.ribbon-bow{
+    position:absolute;
+
+    top:5px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    font-size:50px;
+}
+
+.gift.open .lid{
+    transform:
+        rotate(-40deg)
+        translateX(-40px)
+        translateY(-60px);
+}
+
+.hint{
+    margin-top:30px;
+
+    color:white;
+
+    font-size:24px;
+
+    animation:blink 1.5s infinite;
+}
+
+.message{
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%) scale(0.2);
+
+    opacity:0;
+
+    text-align:center;
+}
+
+.message.show{
+    animation:showText 1.5s forwards;
+}
+
+.message h1{
+    color:gold;
+
+    font-size:80px;
+
+    text-shadow:
+        0 0 20px gold,
+        0 0 40px orange;
+}
+
+.message p{
+    color:white;
+
+    margin-top:20px;
+
+    font-size:30px;
+}
+
+.firework{
+    position:absolute;
+
+    width:8px;
+    height:8px;
+
+    border-radius:50%;
+}
+
+@keyframes floating{
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-20px);
+    }
+}
+
+@keyframes glowing{
+    from{
+        filter:
+            drop-shadow(0 0 10px gold);
+    }
+
+    to{
+        filter:
+            drop-shadow(0 0 40px gold);
+    }
+}
+
+@keyframes blink{
+    50%{
+        opacity:.4;
+    }
+}
+
+@keyframes showText{
+
+    0%{
+        opacity:0;
+        transform:translate(-50%,-50%) scale(.2);
+    }
+
+    80%{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1.15);
+    }
+
+    100%{
+        opacity:1;
+        transform:translate(-50%,-50%) scale(1);
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="container">
+
+    <div id="gift" class="gift">
+
+        <div class="lid"></div>
+
+        <div class="box"></div>
+
+        <div class="ribbon-bow">🎀</div>
+
+    </div>
+
+    <div id="hint" class="hint">
+        Click To Open
+    </div>
+
+</div>
+
+<div id="message" class="message">
+
+    <h1>🎉 Happy Birthday 🎉</h1>
+
+    <p>
+        Come to IVAI table<br>
+        to get your birthday present 🎁
+    </p>
+
+</div>
+
+<script>
+
+const gift = document.getElementById("gift");
+const hint = document.getElementById("hint");
+const message = document.getElementById("message");
+
+let opened = false;
+
+gift.addEventListener("click",()=>{
+
+    if(opened) return;
+
+    opened = true;
+
+    hint.style.display = "none";
+
+    gift.classList.add("open");
+
+    fireworks();
+
+    setTimeout(()=>{
+        message.classList.add("show");
+    },1000);
+
+});
+
+function fireworks(){
+
+    for(let burst=0; burst<12; burst++){
+
+        setTimeout(()=>{
+
+            let x =
+                Math.random()*window.innerWidth;
+
+            let y =
+                Math.random()*window.innerHeight*0.6;
+
+            createBurst(x,y);
+
+        },burst*200);
+
+    }
+
+}
+
+function createBurst(cx,cy){
+
+    const colors = [
+        "red",
+        "yellow",
+        "cyan",
+        "lime",
+        "white",
+        "magenta",
+        "orange"
+    ];
+
+    for(let i=0;i<40;i++){
+
+        const dot =
+            document.createElement("div");
+
+        dot.className = "firework";
+
+        dot.style.left = cx+"px";
+        dot.style.top = cy+"px";
+
+        dot.style.background =
+            colors[Math.floor(Math.random()*colors.length)];
+
+        document.body.appendChild(dot);
+
+        let angle =
+            Math.random()*Math.PI*2;
+
+        let dist =
+            80 + Math.random()*200;
+
+        let x =
+            Math.cos(angle)*dist;
+
+        let y =
+            Math.sin(angle)*dist;
+
+        dot.animate([
+            {
+                transform:"translate(0,0)",
+                opacity:1
+            },
+            {
+                transform:`translate(${x}px,${y}px)`,
+                opacity:0
+            }
+        ],{
+            duration:1500,
+            easing:"ease-out"
+        });
+
+        setTimeout(()=>{
+            dot.remove();
+        },1500);
+    }
+}
+
+</script>
+
+</body>
+</html>
