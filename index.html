@@ -33,20 +33,27 @@ body{
 }
 
 .gift{
-    width:180px;
-    height:180px;
+    width:260px;
+    height:260px;
     position:relative;
     margin:auto;
     cursor:pointer;
-
+    outline: none;
+    user-select:none;
+    
     animation:
         floating 3s ease-in-out infinite,
         glowing 1.5s ease-in-out infinite alternate;
 }
 
+
+
 .box{
     position:absolute;
-    bottom:0;
+    left:50%;
+    bottom:20px;
+
+    transform:translateX(-50%);
 
     width:180px;
     height:120px;
@@ -54,6 +61,7 @@ body{
     background:#dc2626;
     border-radius:10px;
 }
+
 
 .box::before{
     content:"";
@@ -72,11 +80,13 @@ body{
 .lid{
     position:absolute;
 
+    left:50%;
+    top:95px;
+
+    transform:translateX(-50%);
+
     width:190px;
     height:45px;
-
-    top:40px;
-    left:-5px;
 
     background:#ef4444;
 
@@ -100,20 +110,29 @@ body{
 
     background:gold;
 }
+.box,
+.lid,
+.ribbon-bow{
+    pointer-events:none;
+}
+
 
 .ribbon-bow{
     position:absolute;
 
-    top:5px;
     left:50%;
+    top:55px;
 
     transform:translateX(-50%);
 
     font-size:50px;
+
+    pointer-events:none;
 }
 
 .gift.open .lid{
     transform:
+        translateX(-50%)
         rotate(-40deg)
         translateX(-40px)
         translateY(-60px);
@@ -238,7 +257,7 @@ body{
     </div>
 
     <div id="hint" class="hint">
-        Click To Open
+        Want to see what's inside ? Click To Open
     </div>
 
 </div>
