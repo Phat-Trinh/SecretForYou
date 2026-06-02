@@ -149,17 +149,28 @@ body{
 }
 
 .message{
-
     position:absolute;
-
     top:50%;
     left:50%;
-
     transform:translate(-50%,-50%) scale(0.2);
 
     opacity:0;
 
     text-align:center;
+
+    pointer-events:none;   /* Add this */
+}
+
+.birthday-image{
+    width:50vw;          /* 50% of browser width */
+    max-width:700px;     /* don't get too large on big screens */
+    max-height:50vh;     /* at most 50% of screen height */
+
+    object-fit:contain;
+
+    display:block;
+
+    margin:0 auto 20px auto;
 }
 
 .message.show{
@@ -257,18 +268,22 @@ body{
     </div>
 
     <div id="hint" class="hint">
-        Want to see what's inside ? Click To Open
+        Surprise present for u 👆
     </div>
 
 </div>
 
 <div id="message" class="message">
 
-    <h1>🎉 Happy Birthday 🎉</h1>
+    <img
+        src="image.png"
+        alt="Happy Birthday"
+        class="birthday-image"
+    >
 
     <p>
-        Come to IVAI table<br>
-        to get your birthday present 🎁
+        Stop by the IVAI's table to pick it up,<br/>
+        or send 5,000 VND and we'll deliver it right to your desk
     </p>
 
 </div>
